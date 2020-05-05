@@ -4,9 +4,17 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UsersController extends Controller
 {
+
+    private $users;
+
+    public function __construct(User $user) {
+        $this->users = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +23,11 @@ class UsersController extends Controller
     public function index()
     {
         //
+        return response()
+            ->json([
+                $this->users->all(),
+                'data' => 'ok'
+            ], 200);
     }
 
     /**
