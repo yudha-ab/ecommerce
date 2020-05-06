@@ -39,7 +39,7 @@ class RegisterUser {
         }
         
         // save values
-        return User::create((array)$userStruct);
+        return $this->userModel::create((array)$userStruct);
     }
 
 }
