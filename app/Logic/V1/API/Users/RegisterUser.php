@@ -1,7 +1,7 @@
 <?php
 namespace App\Logic\V1\API\Users;
 
-use App\Models\User;
+use App\User;
 use Str;
 use App\Structs\UsersStruct;
 use Hash;

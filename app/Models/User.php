@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
+    use HasApiTokens;
     //
     public $timestamps = false;
 
@@ -16,5 +17,9 @@ class User extends Model
         'username',
         'is_active',
         'source'
+    ];
+
+    protected $hidden = [
+        'password'
     ];
 }

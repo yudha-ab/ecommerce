@@ -14,12 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
     Route::group(['prefix' => 'users', 'as' => 'users.'], function() {
         Route::resource('/', 'API\V1\UsersController');
+
+        // Auth Routes
+        Route::post('login', 'API\V1\AuthController@login')->name('login');
+
+        // Route::group([
+        //     'middleware' => 'auth:api'
+        // ], function() {
+        //     Route::get('profile', 'App\Http\Controllers\API\V1\AuthController');
+        // });
     });
 });
