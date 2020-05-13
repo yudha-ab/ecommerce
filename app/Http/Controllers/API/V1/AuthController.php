@@ -10,7 +10,6 @@ use Carbon\Carbon;
 
 class AuthController extends Controller {
     public function login(Request $request) {
-        // dd(['email' => $request->email, 'password' => $request->password]);
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = $request->user();
 
@@ -38,5 +37,14 @@ class AuthController extends Controller {
 
     public function getUser(Request $request) {
         return response()->json($request->user());
+    }
+
+    public function logout(Request $request) {
+        $token = $request->user()->token();
+        $token->revoke();
+
+        return response()->json([
+            'message' => 'success to logout'
+        ]);
     }
 }
