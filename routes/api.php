@@ -14,27 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-Route::middleware('auth:api')->group(function() {
-    Route::get('/user', 'API\V1\AuthController@getUser');
-
-    Route::get('/logout', 'API\V1\AuthController@logout');
-});
-
 Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
-    Route::group(['prefix' => 'users', 'as' => 'users.'], function() {
-        Route::resource('/', 'API\V1\UsersController');
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
+        // Route::resource('/', 'API\V1\UsersController');
 
         // Auth Routes
         Route::post('login', 'API\V1\AuthController@login')->name('login');
 
-        // Route::group([
-        //     'middleware' => 'auth:api'
-        // ], function() {
-        //     Route::get('profile', 'App\Http\Controllers\API\V1\AuthController');
-        // });
+        Route::group([
+            'middleware' => 'auth:api'
+        ], function() {
+            // user
+            Route::get('profile', 'API\V1\AuthController@getUser')->name('profile');
+            Route::get('logout', 'API\V1\AuthController@logout')->name('logout');
+        });
+    });
+
+    Route::group([
+        'middleware' => 'auth:api',
+        'prefix' => 'admin',
+        'as' => 'admin'
+    ], function() {
+        Route::get('categories', function() {
+            
+        });
     });
 });
