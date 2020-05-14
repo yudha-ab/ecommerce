@@ -4,6 +4,10 @@ namespace App\Http\Controllers\API\V1\Categories;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use Validator;
+use App\Logic\V1\API\Categories\CreateCategory;
+use App\Structs\CategoryStruct;
 
 class CategoriesController extends Controller
 {
@@ -14,7 +18,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            'data' => Category::all()
+        ]);
     }
 
     /**
@@ -25,7 +31,24 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|min:5',
+            'user_creator' => 'required|integer'
+        ]);
+        
+        if ($validate->fails()) {
+            return response()->json([
+                'errors' => $validate->errors()
+            ]);
+        }
+
+        $struct = new CategoryStruct();
+        $struct->name = $request['name'];
+        $struct->user_creator = $request['user_creator'];
+
+        $logic = new CreateCategory();
+        $logic->createCategory($struct);
+        dd('ctrl');
     }
 
     /**

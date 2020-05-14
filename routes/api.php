@@ -33,10 +33,15 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
     Route::group([
         'middleware' => 'auth:api',
         'prefix' => 'admin',
-        'as' => 'admin'
+        'as' => 'admin.'
     ], function() {
-        Route::get('categories', function() {
-            
+        Route::get('categories', 'API\V1\Categories\CategoriesController@index')->name('categories');
+
+        Route::group([
+            'prefix' => 'category',
+            'as' => 'category'
+        ], function() {
+            Route::post('/', 'API\V1\Categories\CategoriesController@store')->name('add');
         });
     });
 });
