@@ -8,6 +8,7 @@ use App\Models\Category;
 use Validator;
 use App\Logic\V1\API\Categories\Admin\CreateCategory;
 use App\Structs\CategoryStruct;
+use TypeError;
 
 class CategoriesController extends Controller
 {
@@ -46,7 +47,14 @@ class CategoriesController extends Controller
 
         $logic = new CreateCategory();
         $result = $logic->createCategory($struct);
-        dd('ctrl', $result);
+        if (is_array($result) || !$result) {
+            return response()->json([
+                'message' => is_array($result)? $result: 'failed to save data'
+            ], 422);
+        }
+        return response()->json([
+            'message' => 'success'
+        ]);
     }
 
     /**

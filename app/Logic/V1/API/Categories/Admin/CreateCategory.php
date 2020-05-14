@@ -34,6 +34,10 @@ class CreateCategory {
         $categoryStruct->name = Str::title($categoryStruct->name);
         $categoryStruct->user_creator = Auth::user()->id;
         $categoryStruct->slug = Str::slug($categoryStruct->name, '-');
-        return Category::create((array)$categoryStruct);
+        $save = Category::create((array)$categoryStruct);
+        if ($save) {
+            return true;
+        }
+        return false;
     }
 }
