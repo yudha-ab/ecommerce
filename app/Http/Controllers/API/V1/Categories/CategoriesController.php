@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Validator;
-use App\Logic\V1\API\Categories\CreateCategory;
+use App\Logic\V1\API\Categories\Admin\CreateCategory;
 use App\Structs\CategoryStruct;
 
 class CategoriesController extends Controller
@@ -33,7 +33,6 @@ class CategoriesController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required|min:5',
-            'user_creator' => 'required|integer'
         ]);
         
         if ($validate->fails()) {
@@ -44,11 +43,10 @@ class CategoriesController extends Controller
 
         $struct = new CategoryStruct();
         $struct->name = $request['name'];
-        $struct->user_creator = $request['user_creator'];
 
         $logic = new CreateCategory();
-        $logic->createCategory($struct);
-        dd('ctrl');
+        $result = $logic->createCategory($struct);
+        dd('ctrl', $result);
     }
 
     /**
