@@ -4,11 +4,9 @@ namespace App\Http\Controllers\API\V1\Categories;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
 use Validator;
 use App\Logic\V1\API\Categories\Admin\CreateCategory;
 use App\Structs\CategoryStruct;
-use TypeError;
 
 class CategoriesController extends Controller
 {
@@ -20,7 +18,7 @@ class CategoriesController extends Controller
     public function index()
     {
         return response()->json([
-            'data' => Category::all()
+            'message' => 'index'
         ]);
     }
 

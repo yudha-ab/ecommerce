@@ -19,4 +19,13 @@ class Category extends Model
     protected $hidden = [
         'deleted_at'
     ];
+
+    protected $casts = [
+        'created_at' => 'datetime:d M Y H:i:s',
+        'updated_at' => 'datetime:d M Y H:i:s',
+    ];
+
+    public function user() {
+        return $this->belongsTo('App\User', 'user_creator', 'id');
+    }
 }
