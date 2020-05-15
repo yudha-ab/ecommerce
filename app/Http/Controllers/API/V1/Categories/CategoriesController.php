@@ -66,6 +66,12 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
+        if (!is_numeric($id)) {
+            return response()->json([
+                'message' => 'invalid ID'
+            ], 422);
+        }
+        
         $data = new ShowCategory(intval($id));
         return response()->json([
             'data' => $data->run()
