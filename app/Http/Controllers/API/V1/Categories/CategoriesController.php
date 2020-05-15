@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Logic\V1\API\Categories\Admin\CreateCategory;
 use App\Logic\V1\API\Categories\Admin\ShowCategories;
+use App\Logic\V1\API\Categories\Admin\ShowCategory;
 use App\Structs\CategoryStruct;
 
 class CategoriesController extends Controller
@@ -65,7 +66,10 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        
+        $data = new ShowCategory(intval($id));
+        return response()->json([
+            'data' => $data->run()
+        ]);
     }
 
     /**
