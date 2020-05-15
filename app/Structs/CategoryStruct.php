@@ -1,6 +1,10 @@
 <?php
 namespace App\Structs;
 
+/**
+ * class CategoryStruct
+ * to define data struct from table categories
+ */
 class CategoryStruct {
     public int $id;
     public string $name;

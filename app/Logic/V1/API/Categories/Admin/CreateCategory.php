@@ -6,6 +6,9 @@ use App\Structs\CategoryStruct;
 use Auth;
 use Str;
 
+/**
+ * class CreateCategory
+ */
 class CreateCategory {
     private $categoryModel;
 
