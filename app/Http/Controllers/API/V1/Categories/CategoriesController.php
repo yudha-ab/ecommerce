@@ -87,7 +87,16 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (!is_numeric($id)) {
+            return response()->json([
+                'message' => 'invalid ID'
+            ], 422);
+        }
+
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|min:5'
+        ]);
+        dd($validate->fails(), $validate->errors());
     }
 
     /**

@@ -43,6 +43,7 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
         ], function() {
             Route::post('/', 'API\V1\Categories\CategoriesController@store')->name('add');
             Route::get('/{id}', 'API\V1\Categories\CategoriesController@show')->name('show');
+            Route::put('/{id}', 'API\V1\Categories\CategoriesController@update')->name('patch');
         });
     });
 });
