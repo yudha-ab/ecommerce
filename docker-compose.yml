@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  php:
+    build: ./docker
+    container_name: ecommerce-app
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=y
+      - APPLICATION_ENV=development
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www/:cached
+    links:
+      - mysql
+  mysql:
+    container_name: ecommerce-db
+    image: mysql:5.7.20
+    ports:
+      - 3399:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: default
+      MYSQL_USER: default
+      MYSQL_PASSWORD: secret
+    volumes:
+      - ./.docker/data/db:/var/lib/mysql:cached
+  nginx:
+    image: nginx:alpine
+    container_name: ecommerce-nginx
+    ports:
+      - "8090:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    links:
+      - php
